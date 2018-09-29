@@ -1,22 +1,19 @@
+'use strict';
 
+var fs = require('fs');
+var path = require('path');
+var guestsPath = path.join(__dirname, 'guests.json');
 
-
-const fs = require('fs');
-const path = require('path');
-
-const guestsPath = path.join(__dirname, 'guests.json');
-
-const express = require('express');
-
-const app = express();
-const port = process.env.PORT || 8000;
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 8000;
 
 app.disable('x-powered-by');
 
 app.use(function(req, res, next) {
-  let start = new Date();
+  var start = new Date();
   next();
-  let end = new Date();
+  var end = new Date();
   console.log(req.method, req.url, res.statusCode, end - start, 'ms');
 });
 
@@ -27,7 +24,7 @@ app.get('/guests', function(req, res) {
       return res.sendStatus(500);
     }
 
-    let guests = JSON.parse(guestsJSON);
+    var guests = JSON.parse(guestsJSON);
 
     res.send(guests);
   });
@@ -40,8 +37,8 @@ app.get('/guests/:id', function(req, res) {
       return res.sendStatus(500);
     }
 
-    let id = Number.parseInt(req.params.id);
-    let guests = JSON.parse(guestsJSON);
+    var id = Number.parseInt(req.params.id);
+    var guests = JSON.parse(guestsJSON);
 
     if (id < 0 || id >= guests.length || Number.isNaN(id)) {
       return res.sendStatus(404);
