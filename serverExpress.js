@@ -8,14 +8,10 @@ var express = require('express');
 var app = express();
 var port = process.env.PORT || 8000;
 
-app.disable('x-powered-by');
+var morgan = require('morgan');
 
-app.use(function(req, res, next) {
-  var start = new Date();
-  next();
-  var end = new Date();
-  console.log(req.method, req.url, res.statusCode, end - start, 'ms');
-});
+app.disable('x-powered-by');
+app.use(morgan('short'));
 
 app.get('/guests', function(req, res) {
   fs.readFile(guestsPath, 'utf8', function(err, guestsJSON) {
